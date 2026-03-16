@@ -3,12 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panda</title>
+    <title>Panda Restaurant</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        header { background: #333; color: #fff; padding: 1rem; text-align: center; }
+        nav a { color: #fff; padding: 0.5rem 1rem; text-decoration: none; }
+        .hero { background-image: url('mascot.jpg'); height: 50vh; background-size: cover; }
+        .gallery { display: flex; flex-wrap: wrap; justify-content: center; }
+        .gallery img { width: 200px; height: auto; margin: 10px; border: 5px solid white; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Panda</h1>
-    <img src="filename.jpg" alt="example image">
-    <img src="another_image.png" alt="another example">
-    <!-- Add more content here as needed -->
+    <header>
+        <img src="logo.png" alt="Panda Logo" style="height: 100px;">
+        <nav>
+            <a href="#about">About</a>
+            <a href="#menu">Menu</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    <section class="hero"></section>
+    <section id="gallery" class="gallery">
+        <h2>Image Gallery</h2>
+        <img src="burger.jpg" alt="Delicious Burger">
+        <img src="pizza.jpg" alt="Tasty Pizza">
+        <img src="neon.jpg" alt="Neon Sign">
+        <img src="interior1.jpg" alt="Interior View 1">
+        <img src="interior2.jpg" alt="Interior View 2">
+        <img src="sign.jpg" alt="Restaurant Sign">
+        <img src="table.jpg" alt="Table Setting">
+    </section>
 </body>
 </html>
