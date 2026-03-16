@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panda's Kitchen | Debre Birhan</title>
+  <meta name="description" content="Panda's Kitchen — Debre Birhan's most vibrant restaurant. Burgers, Pizza, Noodles, Burritos & Fish Cutlet. Call +251907445803" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* =============================================
+       RESET & VARIABLES
+    ============================================= */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    :root {
+      --yellow:   #F5C518;
+      --yellow-d: #d4a900;
+      --black:    #0C0C0C;
+      --surface:  #141414;
+      --card:     #1C1C1C;
+      --border:   rgba(255,255,255,0.07);
+      --text:     #EDEDED;
+      --muted:    rgba(237,237,237,0.5);
+      --radius:   14px;
+      --transition: 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; object-fit: cover; }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: 'Outfit', sans-serif; cursor: pointer; border: none; background: none; }
+
+    /* =============================================
+       UTILITY
+    ============================================= */
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 2rem; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--yellow);
+    }
+    .tag::before { content: ''; width: 22px; height: 2px; background: var(--yellow); border-radius: 2px; flex-shrink: 0; }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .section-title .accent { color: var(--yellow); }
+    .lead { color: var(--muted); font-size: 1rem; line-height: 1.8; }
+
+    /* =============================================
+       SCROLL REVEAL
+    ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* =============================================
+       NAV
+    ============================================= */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: 68px;
+      display: flex; align-items: center;
+      background: rgba(12,12,12,0.85);
+      backdrop-filter: blur(24px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+    #navbar.scrolled { background: rgba(12,12,12,0.97); }
+    .nav-inner {
+      width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.65rem; }
+    .nav-brand img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .nav-brand-name {
+      font-family: 'Syne', sans-serif; font-size: 1.15rem;
+      font-weight: 800; color: var(--yellow); letter-spacing: -0.01em;
+    }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted);
+      transition: color var(--transition); position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 2px; background: var(--yellow);
+      border-radius: 2px; transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-lang {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 0.4rem 0.95rem; border-radius: 50px;
+      border: 1.5px solid rgba(245,197,24,0.35); color: var(--yellow);
+      transition: all var(--transition);
+    }
+    .btn-lang:hover { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+    .btn-cta {
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em;
+      padding: 0.5rem 1.3rem; border-radius: 50px;
+      background: var(--yellow); color: var(--black);
+      transition: all var(--transition);
+    }
+    .btn-cta:hover { background: #ffd740; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245,197,24,0.35); }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    .hero {
+      min-height: 100vh; position: relative;
+      display: flex; align-items: center;
+      padding: 88px 0 0;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('images/interior2.jpg') center / cover no-repeat;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(12,12,12,0.97) 42%, rgba(12,12,12,0.55) 75%, rgba(12,12,12,0.2) 100%);
+    }
+    .hero-glow {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 50% 60% at 10% 60%, rgba(245,197,24,0.06) 0%, transparent 70%);
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 3rem;
+      max-width: 1180px; margin: 0 auto; padding: 5rem 2rem 5rem;
+      width: 100%;
+    }
+    .hero-pill {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      background: rgba(245,197,24,0.1); border: 1px solid rgba(245,197,24,0.22);
+      border-radius: 50px; padding: 0.32rem 0.9rem; margin-bottom: 1.6rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--yellow);
+    }
+    .pill-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--yellow);
+      animation: pulse-dot 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse-dot { 0%,100%{opacity:1; transform:scale(1);} 50%{opacity:0.3; transform:scale(0.7);} }
+    .hero-heading {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3.2rem, 6.5vw, 6rem);
+      line-height: 0.95; letter-spacing: -0.03em;
+      margin-bottom: 1.4rem;
+    }
+    .hero-heading .line-accent { color: var(--yellow); display: block; }
+    .hero-heading .line-ghost {
+      display: block;
+      -webkit-text-stroke: 1.5px rgba(245,197,24,0.25);
+      color: transparent;
+    }
+    .hero-desc {
+      color: var(--muted); font-size: 1.05rem; line-height: 1.8;
+      max-width: 440px; margin-bottom: 2.2rem;
+    }
+    .hero-desc strong { color: var(--text); font-weight: 600; }
+    .hero-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--yellow); color: var(--black);
+      font-size: 0.88rem; font-weight: 700; letter-spacing: 0.04em;
+      padding: 0.85rem 2rem; border-radius: 50px;
+      transition: all var(--transition);
+    }
+    .btn-primary:hover { background: #ffd740; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,197,24,0.35); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--text); font-size: 0.88rem; font-weight: 600;
+      padding: 0.85rem 1.8rem; border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      transition: all var(--transition);
+    }
+    .btn-secondary:hover { border-color: var(--yellow); color: var(--yellow); }
+    /* hero right */
+    .hero-visual { position: relative; }
+    .hero-img-main {
+      width: 100%; aspect-ratio: 4/5; border-radius: 24px; overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(245,197,24,0.12);
+      animation: float 6s ease-in-out infinite;
+    }
+    .hero-img-main img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-img-mini {
+      position: absolute; bottom: -16px; left: -20px;
+      width: 140px; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+      border: 3px solid var(--black);
+      animation: float 6s 1.5s ease-in-out infinite;
+    }
+    .hero-img-mini img { width: 100%; height: 100px; }
+    .hero-badge {
+      position: absolute; top: -10px; right: -10px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--yellow); color: var(--black);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 0.6rem; font-weight: 800;
+      letter-spacing: 0.1em; text-align: center; line-height: 1.3;
+      border: 3px solid var(--black);
+      animation: spin 20s linear infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    @keyframes spin  { to{transform:rotate(360deg)} }
+
+    /* =============================================
+       MARQUEE
+    ============================================= */
+    .marquee { overflow: hidden; background: var(--yellow); padding: 0.7rem 0; }
+    .marquee-track {
+      display: flex; width: max-content;
+      animation: marquee 24s linear infinite;
+    }
+    .marquee-group { display: flex; align-items: center; gap: 1.8rem; padding: 0 1.8rem; flex-shrink: 0; }
+    .marquee-group span {
+      font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 800;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--black); white-space: nowrap;
+    }
+    .marquee-group .sep { opacity: 0.3; font-size: 0.7rem; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* =============================================
+       STATS STRIP
+    ============================================= */
+    .stats-strip { background: var(--surface); border-bottom: 1px solid var(--border); }
+    .stats-inner {
+      max-width: 1180px; margin: 0 auto; padding: 0 2rem;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .stat-item {
+      padding: 2rem 1.5rem; text-align: center;
+      border-right: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(245,197,24,0.04); }
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800;
+      color: var(--yellow); line-height: 1;
+    }
+    .stat-lbl { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; }
+
+    /* =============================================
+       ABOUT
+    ============================================= */
+    .about-section { padding: 7rem 0; }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+    }
+    .about-copy { }
+    .about-copy .tag { margin-bottom: 1.2rem; }
+    .about-copy .section-title { margin-bottom: 1rem; }
+    .about-copy .lead { margin-bottom: 1.2rem; }
+    .about-copy .lead b { color: var(--text); font-weight: 600; }
+    .features-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.8rem; }
+    .feature-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.9rem 1.1rem;
+      background: rgba(245,197,24,0.04); border: 1px solid rgba(245,197,24,0.1);
+      border-radius: 10px; transition: all var(--transition);
+    }
+    .feature-item:hover { background: rgba(245,197,24,0.09); transform: translateX(4px); }
+    .fi-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .fi-text b { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 0.1rem; }
+    .fi-text span { font-size: 0.82rem; color: var(--muted); }
+    /* about visual */
+    .about-visual { position: relative; }
+    .about-main-img { width: 100%; aspect-ratio: 4/5; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 56px rgba(0,0,0,0.55); }
+    .about-main-img img { width: 100%; height: 100%; }
+    .about-float-img {
+      position: absolute; bottom: -20px; right: -16px;
+      width: 140px; border-radius: 14px; overflow: hidden;
+      border: 4px solid var(--black); box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+    }
+    .about-float-img img { width: 100%; height: 100px; }
+    .about-spin-badge {
+      position: absolute; top: -14px; left: -14px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--yellow); color: var(--black);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 1.5rem; border: 3px solid var(--black);
+      animation: spin 14s linear infinite;
+    }
+    .about-spin-badge span { font-size: 0.42rem; font-family: 'Outfit'; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; line-height: 1; }
+
+    /* =============================================
+       MENU
+    ============================================= */
+    .menu-section { background: var(--surface); padding: 7rem 0; }
+    .menu-head { text-align: center; margin-bottom: 2.5rem; }
+    .menu-head .tag { justify-content: center; margin-bottom: 1rem; }
+    .menu-tabs { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .mtab {
+      padding: 0.48rem 1.3rem; border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.1); color: var(--muted);
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+      transition: all var(--transition);
+    }
+    .mtab:hover, .mtab.active { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px,1fr)); gap: 1.2rem; }
+    /* card */
+    .menu-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .menu-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.45);
+      border-color: rgba(245,197,24,0.22);
+    }
+    .mc-img { height: 185px; overflow: hidden; position: relative; }
+    .mc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .menu-card:hover .mc-img img { transform: scale(1.06); }
+    .mc-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4.5rem;
+    }
+    .mc-badge {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--yellow); color: var(--black);
+      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.2rem 0.6rem; border-radius: 50px;
+    }
+    .mc-body { padding: 1.2rem; }
+    .mc-name {
+      font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+    .mc-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .mc-footer { display: flex; align-items: center; justify-content: space-between; }
+    .mc-price { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--yellow); }
+    .mc-order {
+      font-size: 0.76rem; font-weight: 700; padding: 0.4rem 0.9rem;
+      border-radius: 8px; background: rgba(245,197,24,0.1);
+      color: var(--yellow); border: 1px solid rgba(245,197,24,0.2);
+      transition: all var(--transition);
+    }
+    .mc-order:hover { background: var(--yellow); color: var(--black); }
+
+    /* =============================================
+       GALLERY
+    ============================================= */
+    .gallery-section { padding: 7rem 0; }
+    .gallery-head { margin-bottom: 2.5rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 240px 220px;
+      gap: 0.8rem;
+    }
+    .gc { border-radius: 12px; overflow: hidden; position: relative; }
+    .gc img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .gc:hover img { transform: scale(1.04); }
+    .gc:nth-child(1) { grid-column: span 2; }
+    .gc-label {
+      position: absolute; bottom: 0.8rem; left: 0.8rem;
+      background: rgba(12,12,12,0.78); backdrop-filter: blur(8px);
+      border: 1px solid rgba(245,197,24,0.18);
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--yellow); padding: 0.22rem 0.65rem; border-radius: 50px;
+    }
+
+    /* =============================================
+       ORDER / CONTACT
+    ============================================= */
+    .order-section { background: var(--surface); padding: 7rem 0; }
+    .order-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .order-copy .tag { margin-bottom: 1.2rem; }
+    .order-copy .section-title { margin-bottom: 0.8rem; }
+    .order-copy .lead { margin-bottom: 2rem; }
+    .contact-list { display: flex; flex-direction: column; gap: 0.65rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.1rem;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 11px; color: var(--text);
+      transition: all var(--transition);
+    }
+    .contact-link:hover { background: rgba(245,197,24,0.07); border-color: rgba(245,197,24,0.22); transform: translateX(4px); }
+    .cl-icon {
+      width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.15rem;
+    }
+    .icon-phone  { background: rgba(37,211,102,0.14); }
+    .icon-tiktok { background: rgba(0,242,234,0.1); }
+    .icon-maps   { background: rgba(66,133,244,0.14); }
+    .cl-info small { display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.28); }
+    .cl-info strong { font-size: 0.9rem; }
+    /* form */
+    .order-form {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2rem;
+    }
+    .order-form h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+    .order-form p { font-size: 0.83rem; color: var(--muted); margin-bottom: 1.4rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .fg { margin-bottom: 0.85rem; }
+    .fg label {
+      display: block; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.36);
+      margin-bottom: 0.35rem;
+    }
+    .fg input, .fg select, .fg textarea {
+      width: 100%; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 9px;
+      padding: 0.72rem 0.9rem; color: var(--text); font-family: 'Outfit'; font-size: 0.88rem;
+      outline: none; transition: border-color var(--transition);
+      -webkit-appearance: none;
+    }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--yellow); }
+    .fg select option { background: #1a1a1a; }
+    .fg textarea { resize: vertical; min-height: 80px; }
+    .btn-submit {
+      width: 100%; background: var(--yellow); color: var(--black);
+      font-family: 'Outfit'; font-size: 0.95rem; font-weight: 800;
+      padding: 0.9rem; border-radius: 10px; margin-top: 0.4rem;
+      transition: all var(--transition);
+    }
+    .btn-submit:hover { background: #ffd740; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,197,24,0.3); }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: #080808;
+      border-top: 1px solid var(--border);
+      padding: 3.5rem 0 1.5rem;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 2.5rem; margin-bottom: 2.5rem;
+    }
+    .footer-brand { }
+    .footer-brand-logo { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.9rem; }
+    .footer-brand-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+    .footer-brand-logo strong { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--yellow); }
+    .footer-brand p { font-size: 0.83rem; color: rgba(255,255,255,0.36); line-height: 1.7; max-width: 220px; }
+    .footer-col h4 {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.28); margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.5rem; }
+    .footer-col a { font-size: 0.84rem; color: rgba(255,255,255,0.46); transition: color var(--transition); }
+    .footer-col a:hover { color: var(--yellow); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05);
+      flex-wrap: wrap; gap: 0.8rem;
+    }
+    .footer-bottom p { font-size: 0.76rem; color: rgba(255,255,255,0.22); }
+    .footer-socials { display: flex; gap: 0.5rem; }
+    .footer-socials a {
+      width: 34px; height: 34px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.88rem; color: rgba(255,255,255,0.4);
+      transition: all var(--transition);
+    }
+    .footer-socials a:hover { border-color: var(--yellow); color: var(--yellow); }
+
+    /* =============================================
+       FAB
+    ============================================= */
+    .fab {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--yellow); color: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.35rem; box-shadow: 0 4px 20px rgba(245,197,24,0.45);
+      animation: fab-pulse 2.5s ease-in-out infinite;
+      transition: transform var(--transition);
+    }
+    .fab:hover { transform: scale(1.1); }
+    @keyframes fab-pulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(245,197,24,0.4); }
+      50%      { box-shadow: 0 4px 36px rgba(245,197,24,0.75); }
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 860px) {
+      #navbar .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+      .hero-visual { display: none; }
+      .container { padding: 0 1.5rem; }
+      .about-grid,
+      .order-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-section,
+      .menu-section,
+      .gallery-section,
+      .order-section { padding: 4rem 0; }
+      .stats-inner { grid-template-columns: repeat(2,1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-grid .gc { height: 155px; }
+      .gallery-grid .gc:nth-child(1) { grid-column: span 2; height: 190px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.8rem; }
+    }
+    @media (max-width: 500px) {
+      .hero-heading { font-size: 2.6rem; }
+      .hero-btns { flex-direction: column; }
+      .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── FAB ── -->
+  <a href="tel:+251907445803" class="fab" aria-label="Call us">📞</a>
+
+  <!-- ── NAV ── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <img src="images/logo.png" alt="Panda's Kitchen Logo" />
+        <span class="nav-brand-name">Panda's Kitchen</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about"   class="tl" data-en="About"   data-am="ስለ እኛ">About</a></li>
+        <li><a href="#menu"    class="tl" data-en="Menu"    data-am="ምናሌ">Menu</a></li>
+        <li><a href="#gallery" class="tl" data-en="Gallery" data-am="ፎቶዎች">Gallery</a></li>
+        <li><a href="#order"   class="tl" data-en="Order"   data-am="ትዕዛዝ">Order</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="btn-lang" id="langBtn" onclick="switchLang()">🇪🇹 አማርኛ</button>
+        <a href="#order" class="btn-cta tl" data-en="Order Now" data-am="አሁን ይዘዙ">Order Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="hero-pill">
+          <div class="pill-dot"></div>
+          <span class="tl" data-en="Now Open · Debre Birhan" data-am="አሁን ክፍት · ደብረ ብርሃን">Now Open · Debre Birhan</span>
+        </div>
+        <h1 class="hero-heading">
+          PANDA'S
+          <span class="line-accent">KITCHEN</span>
+          <span class="line-ghost">D/BIRHAN</span>
+        </h1>
+        <p class="hero-desc tl"
+          data-en="Burgers, Pizza, Noodles, Burritos &amp; Fish Cutlet — <strong>made fresh, served with love.</strong> Dine in or call to order."
+          data-am="በርገር፣ ፒዛ፣ ኑድልስ፣ ቡሪቶ እና አሳ ቆጥለት — <strong>ትኩስ፣ ከፍቅር ጋር።</strong> ቤት ውስጥ ይምጡ ወይም ደውለው ይዘዙ።">
+          Burgers, Pizza, Noodles, Burritos &amp; Fish Cutlet — <strong>made fresh, served with love.</strong> Dine in or call to order.
+        </p>
+        <div class="hero-btns">
+          <a href="#menu" class="btn-primary tl" data-en="🍕 See Our Menu" data-am="🍕 ምናሌ ይመልከቱ">🍕 See Our Menu</a>
+          <a href="tel:+251907445803" class="btn-secondary tl" data-en="📞 Call to Order" data-am="📞 ደውለው ይዘዙ">📞 Call to Order</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal reveal-delay-2">
+        <div class="hero-img-main">
+          <img src="images/pizza.jpg" alt="Panda Kitchen signature pizza" />
+        </div>
+        <div class="hero-img-mini">
+          <img src="images/burger.jpg" alt="Panda Kitchen burger" />
+        </div>
+        <div class="hero-badge">
+          <span>🐼</span>
+          <span>PANDA'S</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MARQUEE ── -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <div class="marquee-group">
+        <span>BURGER</span><span class="sep">✦</span>
+        <span>PIZZA</span><span class="sep">✦</span>
+        <span>NOODLES</span><span class="sep">✦</span>
+        <span>BURRITO</span><span class="sep">✦</span>
+        <span>FISH CUTLET</span><span class="sep">✦</span>
+        <span>FRESH JUICE</span><span class="sep">✦</span>
+      </div>
+      <div class="marquee-group" aria-hidden="true">
+        <span>BURGER</span><span class="sep">✦</span>
+        <span>PIZZA</span><span class="sep">✦</span>
+        <span>NOODLES</span><span class="sep">✦</span>
+        <span>BURRITO</span><span class="sep">✦</span>
+        <span>FISH CUTLET</span><span class="sep">✦</span>
+        <span>FRESH JUICE</span><span class="sep">✦</span>
+      </div>
+      <div class="marquee-group" aria-hidden="true">
+        <span>BURGER</span><span class="sep">✦</span>
+        <span>PIZZA</span><span class="sep">✦</span>
+        <span>NOODLES</span><span class="sep">✦</span>
+        <span>BURRITO</span><span class="sep">✦</span>
+        <span>FISH CUTLET</span><span class="sep">✦</span>
+        <span>FRESH JUICE</span><span class="sep">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STATS ── -->
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-num">5+</div>
+        <div class="stat-lbl tl" data-en="Menu Items" data-am="የምናሌ አይነቶች">Menu Items</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num">2</div>
+        <div class="stat-lbl tl" data-en="Phone Lines" data-am="ስልክ መስመሮች">Phone Lines</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num">🐼</div>
+        <div class="stat-lbl tl" data-en="Panda Vibes" data-am="ፓንዳ ስሜት">Panda Vibes</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-num">D/B</div>
+        <div class="stat-lbl tl" data-en="Debre Birhan" data-am="ደብረ ብርሃን">Debre Birhan</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ABOUT ── -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <div class="tag tl" data-en="Our Story" data-am="ታሪካችን">Our Story</div>
+          <h2 class="section-title">
+            <span class="tl" data-en="Fresh Food," data-am="ትኩስ ምግብ,">Fresh Food,</span><br />
+            <span class="accent tl" data-en="Great Vibes" data-am="ድንቅ ስሜት">Great Vibes</span>
+          </h2>
+          <p class="lead tl"
+            data-en="Panda's Kitchen is Debre Birhan's freshest and most vibrant restaurant — a modern, clean space with panda murals, neon signs and great energy. We craft every dish with care."
+            data-am="ፓንዳ ኪቸን የደብረ ብርሃን ዘመናዊ ምግብ ቤት ነው — ፓንዳ ሥዕሎች፣ ኒዮን ምልክቶች እና ድንቅ ስሜት ያለው ንጹህ ቦታ።">
+            Panda's Kitchen is Debre Birhan's freshest and most vibrant restaurant — a modern, clean space with panda murals, neon signs and great energy. We craft every dish with care.
+          </p>
+          <p class="lead tl"
+            data-en="From our loaded <b>Signature Pizza</b> to the juicy <b>Panda Burger</b>, stir-fried <b>Noodles</b>, <b>Burritos</b>, and the beloved <b>Fish Cutlet (አሳ ቆጥለት)</b> — every plate is made fresh to order."
+            data-am="ከሲግኔቸር <b>ፒዛ</b> እስከ <b>ፓንዳ በርገር</b>፣ <b>ኑድልስ</b>፣ <b>ቡሪቶ</b> እና <b>አሳ ቆጥለት</b> — ሁሉም ምግቦች ትኩስ ሆነው ይዘጋጃሉ።">
+            From our loaded <b>Signature Pizza</b> to the juicy <b>Panda Burger</b>, stir-fried <b>Noodles</b>, <b>Burritos</b>, and the beloved <b>Fish Cutlet (አሳ ቆጥለት)</b> — every plate is made fresh to order.
+          </p>
+          <div class="features-list">
+            <div class="feature-item">
+              <div class="fi-icon">🍕</div>
+              <div class="fi-text">
+                <b class="tl" data-en="Diverse Menu" data-am="ብዙ አይነት ምግቦች">Diverse Menu</b>
+                <span class="tl" data-en="Pizza, Burgers, Noodles, Burritos & Fish Cutlet" data-am="ፒዛ፣ በርገር፣ ኑድልስ፣ ቡሪቶ እና አሳ ቆጥለት">Pizza, Burgers, Noodles, Burritos & Fish Cutlet</span>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="fi-icon">✨</div>
+              <div class="fi-text">
+                <b class="tl" data-en="Modern Interior" data-am="ዘመናዊ ምግብ ቤት">Modern Interior</b>
+                <span class="tl" data-en="Panda murals, neon signs, clean bright space" data-am="ፓንዳ ሥዕሎች፣ ኒዮን ምልክቶች፣ ንጹህ ቦታ">Panda murals, neon signs, clean bright space</span>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="fi-icon">📞</div>
+              <div class="fi-text">
+                <b class="tl" data-en="Easy Ordering" data-am="ቀላል ትዕዛዝ">Easy Ordering</b>
+                <span class="tl" data-en="Call us and we handle the rest" data-am="ደውሉልን፣ ሁሉን እናስተናግዳለን">Call us and we handle the rest</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-visual reveal reveal-delay-1">
+          <div class="about-main-img">
+            <img src="images/interior1.jpg" alt="Panda Kitchen dining area" />
+          </div>
+          <div class="about-float-img">
+            <img src="images/neon.jpg" alt="Panda Food neon sign" />
+          </div>
+          <div class="about-spin-badge">🐼<span>Panda's</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MENU ── -->
+  <section id="menu" class="menu-section">
+    <div class="container">
+      <div class="menu-head reveal">
+        <div class="tag tl" data-en="What We Serve" data-am="የምናቀርበው">What We Serve</div>
+        <h2 class="section-title">
+          <span class="tl" data-en="Our " data-am="ምናሌ ">Our </span><span class="accent tl" data-en="Menu" data-am="ዝርዝር">Menu</span>
+        </h2>
+      </div>
+      <div class="menu-tabs">
+        <button class="mtab active" data-cat="all"   onclick="filterMenu('all',this)"><span class="tl" data-en="All"         data-am="ሁሉም">All</span></button>
+        <button class="mtab"         data-cat="main"  onclick="filterMenu('main',this)"><span class="tl" data-en="Main Dishes" data-am="ዋና ምግቦች">Main Dishes</span></button>
+        <button class="mtab"         data-cat="fast"  onclick="filterMenu('fast',this)"><span class="tl" data-en="Fast Food"  data-am="ፈጣን ምግብ">Fast Food</span></button>
+        <button class="mtab"         data-cat="drink" onclick="filterMenu('drink',this)"><span class="tl" data-en="Drinks"    data-am="መጠጦች">Drinks</span></button>
+      </div>
+      <div class="menu-grid" id="menuGrid"></div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ── -->
+  <section id="gallery" class="gallery-section">
+    <div class="container">
+      <div class="gallery-head reveal">
+        <div class="tag tl" data-en="Our Place" data-am="ቦታችን">Our Place</div>
+        <h2 class="section-title">
+          <span class="tl" data-en="Step " data-am="ወደ ">Step </span><span class="accent tl" data-en="Inside" data-am="ውስጥ ይምጡ">Inside</span>
+        </h2>
+        <p class="lead tl"
+          data-en="A modern, vibrant space designed for great food and great company."
+          data-am="ለምርጥ ምግብ እና ለሚወዷቸው ሰዎች የተዘጋጀ ዘመናዊ ቦታ።">
+          A modern, vibrant space designed for great food and great company.
+        </p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gc reveal">
+          <img src="images/interior2.jpg" alt="Panda mural interior" />
+          <div class="gc-label tl" data-en="🐼 Panda Mural" data-am="🐼 ፓንዳ ሥዕል">🐼 Panda Mural</div>
+        </div>
+        <div class="gc reveal reveal-delay-1">
+          <img src="images/neon.jpg" alt="F-O-O-D neon sign" />
+          <div class="gc-label tl" data-en="✨ F🐼🐼D Sign" data-am="✨ ምልክቱ">✨ F🐼🐼D Sign</div>
+        </div>
+        <div class="gc reveal reveal-delay-2">
+          <img src="images/interior1.jpg" alt="Dining area" />
+          <div class="gc-label tl" data-en="🍽️ Dining Area" data-am="🍽️ የምግብ ቦታ">🍽️ Dining Area</div>
+        </div>
+        <div class="gc reveal">
+          <img src="images/pizza.jpg" alt="Signature pizza" />
+          <div class="gc-label tl" data-en="🍕 Signature Pizza" data-am="🍕 ሲግኔቸር ፒዛ">🍕 Signature Pizza</div>
+        </div>
+        <div class="gc reveal reveal-delay-1">
+          <img src="images/burger.jpg" alt="Panda burger" />
+          <div class="gc-label tl" data-en="🍔 Panda Burger" data-am="🍔 ፓንዳ በርገር">🍔 Panda Burger</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ORDER ── -->
+  <section id="order" class="order-section">
+    <div class="container">
+      <div class="order-grid">
+        <div class="order-copy reveal">
+          <div class="tag tl" data-en="Contact Us" data-am="ያግኙን">Contact Us</div>
+          <h2 class="section-title">
+            <span class="tl" data-en="Ready to " data-am="ለ">Ready to </span><span class="accent tl" data-en="Order?" data-am="ትዕዛዝ ዝግጁ?">Order?</span>
+          </h2>
+          <p class="lead tl"
+            data-en="Call us directly or fill the form — we'll confirm your order and have it ready fast."
+            data-am="ቀጥታ ደውሉ ወይም ቅጹን ይሙሉ — ትዕዛዝዎን ለማረጋገጥ ቶሎ እናነጋግርዎታለን።">
+            Call us directly or fill the form — we'll confirm your order and have it ready fast.
+          </p>
+          <div class="contact-list">
+            <a href="tel:+251907445803" class="contact-link">
+              <div class="cl-icon icon-phone">📞</div>
+              <div class="cl-info">
+                <small class="tl" data-en="Primary Line" data-am="ዋና ስልክ">Primary Line</small>
+                <strong>+251 907 445 803</strong>
+              </div>
+            </a>
+            <a href="tel:+251918957335" class="contact-link">
+              <div class="cl-icon icon-phone">📞</div>
+              <div class="cl-info">
+                <small class="tl" data-en="Second Line" data-am="ሁለተኛ ስልክ">Second Line</small>
+                <strong>+251 918 957 335</strong>
+              </div>
+            </a>
+            <a href="https://www.tiktok.com/@panda211215" target="_blank" rel="noopener" class="contact-link">
+              <div class="cl-icon icon-tiktok">🎵</div>
+              <div class="cl-info">
+                <small>TikTok</small>
+                <strong>@panda211215</strong>
+              </div>
+            </a>
+            <a href="https://maps.app.goo.gl/uawdknSoKeh84w5FA" target="_blank" rel="noopener" class="contact-link">
+              <div class="cl-icon icon-maps">📍</div>
+              <div class="cl-info">
+                <small class="tl" data-en="Location" data-am="አድራሻ">Location</small>
+                <strong class="tl" data-en="Debre Birhan — View on Google Maps" data-am="ደብረ ብርሃን — ካርታ ይመልከቱ">Debre Birhan — View on Google Maps</strong>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="order-form reveal reveal-delay-1">
+          <h3 class="tl" data-en="Place an Order" data-am="ትዕዛዝ ያስቀምጡ">Place an Order</h3>
+          <p class="tl" data-en="Fill in your details and we'll call to confirm." data-am="መረጃዎን ይሙሉ፣ ለማረጋገጥ እንደውልዎታለን።">Fill in your details and we'll call to confirm.</p>
+          <div class="form-row">
+            <div class="fg">
+              <label class="tl" data-en="Your Name" data-am="ስምዎ">Your Name</label>
+              <input type="text" id="f-name" placeholder="Full name..." autocomplete="name" />
+            </div>
+            <div class="fg">
+              <label class="tl" data-en="Phone" data-am="ስልክ ቁጥር">Phone</label>
+              <input type="tel" id="f-phone" placeholder="+251..." autocomplete="tel" />
+            </div>
+          </div>
+          <div class="fg">
+            <label class="tl" data-en="Choose Dish" data-am="ምግብ ይምረጡ">Choose Dish</label>
+            <select id="f-dish">
+              <option>🍕 Pizza</option>
+              <option>🍔 Burger</option>
+              <option>🍜 Noodles</option>
+              <option>🌯 Burrito</option>
+              <option>🐟 አሳ ቆጥለት (Fish Cutlet)</option>
+              <option>🥤 Fresh Juice</option>
+              <option>Other...</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="tl" data-en="Notes / Address" data-am="ማስታወሻ / አድራሻ">Notes / Address</label>
+            <textarea id="f-note" placeholder="Delivery address or special requests..."></textarea>
+          </div>
+          <button class="btn-submit" onclick="submitOrder()">
+            📞 <span class="tl" data-en="Confirm Order" data-am="ትዕዛዝ አረጋግጥ">Confirm Order</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-logo">
+            <img src="images/logo.png" alt="Panda's Kitchen" />
+            <strong>Panda's Kitchen</strong>
+          </div>
+          <p class="tl"
+            data-en="Debre Birhan's most vibrant restaurant. Fresh food, great vibes, panda energy."
+            data-am="የደብረ ብርሃን ዘመናዊ ምግብ ቤት። ትኩስ ምግብ፣ ድንቅ ስሜት።">
+            Debre Birhan's most vibrant restaurant. Fresh food, great vibes, panda energy.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 class="tl" data-en="MENU" data-am="ምናሌ">MENU</h4>
+          <ul>
+            <li><a href="#menu">🍕 Pizza</a></li>
+            <li><a href="#menu">🍔 Burger</a></li>
+            <li><a href="#menu">🍜 Noodles</a></li>
+            <li><a href="#menu">🌯 Burrito</a></li>
+            <li><a href="#menu">🐟 አሳ ቆጥለት</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="tl" data-en="REACH US" data-am="አድራሻ">REACH US</h4>
+          <ul>
+            <li><a href="tel:+251907445803">📞 +251 907 445 803</a></li>
+            <li><a href="tel:+251918957335">📞 +251 918 957 335</a></li>
+            <li><a href="https://www.tiktok.com/@panda211215" target="_blank" rel="noopener">🎵 @panda211215</a></li>
+            <li><a href="https://maps.app.goo.gl/uawdknSoKeh84w5FA" target="_blank" rel="noopener">📍 <span class="tl" data-en="Find on Maps" data-am="ካርታ ላይ">Find on Maps</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Panda's Kitchen, Debre Birhan. All rights reserved.</p>
+        <div class="footer-socials">
+          <a href="https://www.tiktok.com/@panda211215" target="_blank" rel="noopener" aria-label="TikTok">🎵</a>
+          <a href="tel:+251907445803" aria-label="Call">📞</a>
+          <a href="https://maps.app.goo.gl/uawdknSoKeh84w5FA" target="_blank" rel="noopener" aria-label="Maps">📍</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ─── LANGUAGE ─── */
+    var LANG = 'en';
+
+    function switchLang() {
+      LANG = LANG === 'en' ? 'am' : 'en';
+      document.getElementById('langBtn').textContent = LANG === 'am' ? '🇬🇧 English' : '🇪🇹 አማርኛ';
+      applyLang();
+      var activeCat = document.querySelector('.mtab.active');
+      renderMenu(activeCat ? activeCat.getAttribute('data-cat') : 'all');
+    }
+
+    function applyLang() {
+      var els = document.querySelectorAll('.tl');
+      for (var i = 0; i < els.length; i++) {
+        var el = els[i];
+        var val = el.getAttribute(LANG === 'am' ? 'data-am' : 'data-en');
+        if (!val) continue;
+        if (val.indexOf('<') !== -1) { el.innerHTML = val; }
+        else { el.textContent = val; }
+      }
+    }
+
+    /* ─── MENU DATA ─── */
+    var DISHES = [
+      {
+        name:'Signature Pizza', nameAm:'ሲግኔቸር ፒዛ',
+        badge:'Star Dish', badgeAm:'ምርጥ ምግብ',
+        cat:'main', img:'images/pizza.jpg',
+        desc:'Loaded with minced beef, boiled eggs, fresh vegetables and melted cheese on a crispy golden base.',
+        descAm:'ከቀጭን ስጋ፣ እንቁላል፣ አትክልቶች እና አይብ ጋር የተዘጋጀ ፒዛ — ወርቃማ ቅርፊት ላይ።'
+      },
+      {
+        name:'Panda Burger', nameAm:'ፓንዳ በርገር',
+        badge:'Fast Food', badgeAm:'ፈጣን ምግብ',
+        cat:'fast', img:'images/burger.jpg',
+        desc:'Juicy beef patty loaded with fresh toppings. Served with crispy fries and a cold refreshing juice.',
+        descAm:'ቀጭን ሥጋ ከፍራይ እና ጭማቂ ጋር — ትኩስ ሆኖ ይቀርባል።'
+      },
+      {
+        name:'Noodles', nameAm:'ኑድልስ',
+        badge:'Main', badgeAm:'ዋና ምግብ',
+        cat:'main', img:'', emoji:'🍜',
+        bg:'linear-gradient(135deg,#10182c,#1a2a5c)',
+        desc:'Stir-fried noodles tossed with fresh vegetables and seasoned with our special house sauce.',
+        descAm:'ትኩስ አትክልቶች ጋር የተቀቀለ ኑድልስ — ደስ የሚያሰኝ ምግብ።'
+      },
+      {
+        name:'Burrito', nameAm:'ቡሪቶ',
+        badge:'Fast Food', badgeAm:'ፈጣን ምግብ',
+        cat:'fast', img:'', emoji:'🌯',
+        bg:'linear-gradient(135deg,#1a2010,#2e4a18)',
+        desc:'A hearty wrap filled with seasoned meat, rice, melted cheese and fresh salsa. Rolled fresh every time.',
+        descAm:'ሥጋ፣ ሩዝ፣ አይብ እና ሶስ ጋር የተጠቀለ — ሁልጊዜ ትኩስ።'
+      },
+      {
+        name:'Fish Cutlet', nameAm:'አሳ ቆጥለት',
+        badge:'Special', badgeAm:'ልዩ ምግብ',
+        cat:'main', img:'', emoji:'🐟',
+        bg:'linear-gradient(135deg,#102020,#185040)',
+        desc:'Crispy pan-fried fish cutlets served with dipping sauce and sides. An all-time Panda Kitchen favorite.',
+        descAm:'ትኩስ የተጠበሰ አሳ ቆጥለት ከሶስ ጋር — ፓንዳ ኪቸን ተወዳጅ ምግብ።'
+      },
+      {
+        name:'Fresh Juice', nameAm:'ትኩስ ጭማቂ',
+        badge:'Drink', badgeAm:'መጠጥ',
+        cat:'drink', img:'', emoji:'🥤',
+        bg:'linear-gradient(135deg,#201028,#3a1850)',
+        desc:'Seasonal fresh-pressed fruit juices made to order. Always cold, always refreshing.',
+        descAm:'ትኩስ የፍራፍሬ ጭማቂ — ሁልጊዜ ቀዝቃዛ።'
+      }
+    ];
+
+    function filterMenu(cat, btn) {
+      var tabs = document.querySelectorAll('.mtab');
+      for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+      btn.classList.add('active');
+      renderMenu(cat);
+    }
+
+    function renderMenu(cat) {
+      var grid = document.getElementById('menuGrid');
+      var list = cat === 'all' ? DISHES : DISHES.filter(function(d) { return d.cat === cat; });
+      var html = '';
+      for (var i = 0; i < list.length; i++) {
+        var d = list[i];
+        var nm  = LANG === 'am' ? d.nameAm  : d.name;
+        var bdg = LANG === 'am' ? d.badgeAm : d.badge;
+        var ds  = LANG === 'am' ? d.descAm  : d.desc;
+        var obtn = LANG === 'am' ? 'ዘዝ →' : 'Order →';
+        var imgSection;
+        if (d.img) {
+          imgSection = '<img src="' + d.img + '" alt="' + nm + '" />';
+        } else {
+          imgSection = '<div class="mc-placeholder" style="background:' + (d.bg || '#1c1c1c') + '">' + (d.emoji || '🍽️') + '</div>';
+        }
+        html += '<div class="menu-card reveal">'
+          + '<div class="mc-img">' + imgSection + '<span class="mc-badge">' + bdg + '</span></div>'
+          + '<div class="mc-body">'
+          + '<div class="mc-name">' + nm + '</div>'
+          + '<div class="mc-desc">' + ds + '</div>'
+          + '<div class="mc-footer">'
+          + '<div class="mc-price">— ETB</div>'
+          + '<button class="mc-order" onclick="scrollToOrder(\'' + d.name + '\')">' + obtn + '</button>'
+          + '</div></div></div>';
+      }
+      grid.innerHTML = html;
+      initReveal();
+    }
+
+    function scrollToOrder(name) {
+      document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(function() {
+        var sel = document.getElementById('f-dish');
+        var lc = name.toLowerCase();
+        for (var i = 0; i < sel.options.length; i++) {
+          if (sel.options[i].text.toLowerCase().indexOf(lc) !== -1) { sel.selectedIndex = i; break; }
+        }
+      }, 500);
+    }
+
+    function submitOrder() {
+      var n = (document.getElementById('f-name').value || '').trim();
+      var p = (document.getElementById('f-phone').value || '').trim();
+      if (!n || !p) {
+        alert(LANG === 'am' ? 'ስምዎ እና ስልክ ቁጥርዎን ያስገቡ።' : 'Please enter your name and phone number.');
+        return;
+      }
+      alert(
+        LANG === 'am'
+          ? 'አመሰግናለሁ ' + n + '!\nበ ' + p + ' ላይ ቶሎ እንደውልዎታለን።\n\n🐼 ፓንዳ ኪቸን — ደብረ ብርሃን'
+          : 'Thank you, ' + n + '!\nWe will call you at ' + p + ' shortly to confirm.\n\n🐼 Panda\'s Kitchen — Debre Birhan'
+      );
+    }
+
+    /* ─── NAV SCROLL ─── */
+    window.addEventListener('scroll', function() {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* ─── SCROLL REVEAL ─── */
+    function initReveal() {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.reveal:not(.visible)').forEach(function(el) { io.observe(el); });
+    }
+
+    /* ─── INIT ─── */
+    renderMenu('all');
+    initReveal();
+  </script>
+</body>
+</html>
